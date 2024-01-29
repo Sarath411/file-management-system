@@ -3,11 +3,11 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/api/controllers/docbox": "pages/api/controllers/docbox.js",
-  "/api/controllers/file": "pages/api/controllers/file.js",
-  "/api/controllers/users": "pages/api/controllers/users.js",
   "/docbox": "pages/docbox.js",
+  "/api/controllers/docbox": "pages/api/controllers/docbox.js",
+  "/api/controllers/users": "pages/api/controllers/users.js",
   "/adddocbox": "pages/adddocbox.js",
   "/files": "pages/files.js",
+  "/api/controllers/file": "pages/api/controllers/file.js",
   "/addfiles": "pages/addfiles.js"
 }
