@@ -52,9 +52,7 @@ const DocboxTable: React.FC<DocboxTableProps> = ({ data, onDelete }) => {
   const { user, isLoaded, isSignedIn } = useUser();
 
   const role = user?.publicMetadata?.role ?? "user";
-  const [isUserAssignmentModalOpen, setIsUserAssignmentModalOpen] =
-    useState(false);
-  const [currentDocBoxId, setCurrentDocBoxId] = useState<string | null>(null);
+
   const handleDeleteClick = (itemId: string) => {
     setSelectedItemId(itemId);
     setIsDeleteModalOpen(true);

@@ -29,6 +29,8 @@ interface FileRowData {
   doc_box: string;
   created_by: string;
   description: string;
+  fencing_start_date: Date;
+  fencing_end_date: Date;
 }
 
 interface FilesTableProps {
@@ -128,22 +130,35 @@ const FilesTable: React.FC<FilesTableProps> = ({ data, onDelete, onView }) => {
                 <TableCell>
                   {moment(file.updated_at).format("MMMM D, YYYY")}
                 </TableCell>
+
                 <TableCell>
-                  <IconButton onClick={() => onView(file.file_url)}>
-                    <VisibilityIcon />
-                  </IconButton>
-                  <IconButton onClick={() => handleDownload(file.file_url)}>
-                    <GetAppIcon />
-                  </IconButton>
-                  {(role === "admin" || file.created_by === user?.id) && (
+                  {!(
+                    new Date() >= new Date(file.fencing_start_date) &&
+                    new Date() <= new Date(file.fencing_end_date)
+                  ) || role === "admin" ? (
                     <>
-                      <IconButton href={`/addfiles?file_id=${file.id}`}>
-                        <EditIcon />
+                      <IconButton onClick={() => onView(file.file_url)}>
+                        <VisibilityIcon />
                       </IconButton>
-                      <IconButton onClick={() => handleDeleteClick(file.id)}>
-                        <DeleteIcon />
-                      </IconButton>{" "}
+                      <IconButton onClick={() => handleDownload(file.file_url)}>
+                        <GetAppIcon />
+                      </IconButton>
+
+                      {(role === "admin" || file.created_by === user?.id) && (
+                        <>
+                          <IconButton href={`/addfiles?file_id=${file.id}`}>
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => handleDeleteClick(file.id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>{" "}
+                        </>
+                      )}
                     </>
+                  ) : (
+                    <span>No actions available (fencing period)</span>
                   )}
                 </TableCell>
               </TableRow>

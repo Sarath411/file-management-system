@@ -33,6 +33,28 @@ const fileSchema = Yup.object().shape({
     }
     return true;
   }),
+  fencing_start_date: Yup.mixed()
+    .nullable()
+    .test("end-date-test", "Fencing Start Date is required", function (value) {
+      const { fencing_end_date } = this.parent;
+      if (fencing_end_date) {
+        if (!value) {
+          return false;
+        }
+      }
+      return true;
+    }),
+  fencing_end_date: Yup.mixed()
+    .nullable()
+    .test("end-date-test", "Fencing End Date is required", function (value) {
+      const { fencing_start_date } = this.parent;
+      if (fencing_start_date) {
+        if (!value) {
+          return false;
+        }
+      }
+      return true;
+    }),
 });
 
 const AddFile: React.FC = () => {
@@ -89,6 +111,20 @@ const AddFile: React.FC = () => {
           setValue("docbox_id", fileData.doc_box);
           setValue("existingFileUrl", fileData.file_url);
           setExistingFile(fileData.file_url);
+          setValue(
+            "fencing_start_date",
+            fileData.fencing_start_date
+              ? new Date(fileData.fencing_start_date)
+                  .toISOString()
+                  .split("T")[0]
+              : null
+          );
+          setValue(
+            "fencing_end_date",
+            fileData.fencing_end_date
+              ? new Date(fileData.fencing_end_date).toISOString().split("T")[0]
+              : null
+          );
         })
         .catch((error) => console.error("Error fetching file data:", error));
     }
@@ -101,6 +137,19 @@ const AddFile: React.FC = () => {
     formData.append("description", data.description);
     formData.append("doc_box", data.docbox_id);
     !existingFile && formData.append("file", data.file[0]);
+    console.log(
+      "??????????dateeeeee",
+      data.fencing_start_date,
+      typeof data.fencing_start_date
+    );
+    formData.append(
+      "fencing_start_date",
+      data.fencing_start_date === "" ? null : data.fencing_start_date
+    );
+    formData.append(
+      "fencing_end_date",
+      data.fencing_end_date === "" ? null : data.fencing_end_date
+    );
 
     try {
       if (file_id) {
@@ -208,7 +257,9 @@ const AddFile: React.FC = () => {
               )}
             />
             {errors.docbox_id && (
-              <Typography color="error">{errors.docbox_id.message}</Typography>
+              <Typography color="error" variant="body2">
+                {errors.docbox_id.message}
+              </Typography>
             )}
           </FormControl>
           {/* <FormControl fullWidth margin="normal">
@@ -269,6 +320,54 @@ const AddFile: React.FC = () => {
               />
             )}
           </FormControl>
+
+          <Controller
+            name="fencing_start_date"
+            control={control}
+            defaultValue={null}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                fullWidth
+                type="date"
+                label="Fencing Start Date"
+                InputLabelProps={{ shrink: true }}
+                onSelect={() => {
+                  trigger("fencing_end_date");
+                }}
+                error={!!errors.fencing_start_date}
+                helperText={errors.fencing_start_date?.message}
+                {...field}
+                inputProps={{
+                  min: new Date().toISOString().split("T")[0],
+                }}
+              />
+            )}
+          />
+
+          <Controller
+            name="fencing_end_date"
+            control={control}
+            defaultValue={null}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                fullWidth
+                type="date"
+                label="Fencing End Date"
+                InputLabelProps={{ shrink: true }}
+                error={!!errors.fencing_end_date}
+                helperText={errors.fencing_end_date?.message}
+                onSelect={() => {
+                  trigger("fencing_start_date");
+                }}
+                {...field}
+                inputProps={{
+                  min: new Date().toISOString().split("T")[0],
+                }}
+              />
+            )}
+          />
 
           <Button
             type="submit"

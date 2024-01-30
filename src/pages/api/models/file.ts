@@ -19,6 +19,8 @@ interface FilesAttributes {
   description: string;
   file_url: string;
   doc_box: number;
+  fencing_end_date: Date;
+  fencing_start_date: Date;
   created_at?: Date;
   created_by?: string;
   updated_at?: Date;
@@ -53,6 +55,12 @@ export default class Files extends Model<
 
   @Column
   doc_box!: string;
+
+  @Column
+  fencing_start_date!: Date;
+
+  @Column
+  fencing_end_date!: Date;
 
   @CreatedAt
   created_at!: Date;

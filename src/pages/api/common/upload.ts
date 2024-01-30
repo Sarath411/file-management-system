@@ -30,6 +30,7 @@ export const getFileUrlFromS3 = async (fileKey: string): Promise<string> => {
 
   try {
     const url = await s3.getSignedUrlPromise("getObject", params);
+
     return url;
   } catch (error) {
     console.error("Error getting file URL from S3:", error);

@@ -122,6 +122,7 @@ export const updateFileService = async (
     if (!file) {
       throw new Error("File not found");
     }
+
     await file.update({ updated_by: userData.userId, ...updateData });
 
     const fileUrl = await getFileUrlFromS3(file.file_url);
@@ -141,6 +142,7 @@ export const deleteFileService = async (id: any, userData: any) => {
     if (!file) {
       throw new Error("File not found");
     }
+
     await file.update({ deleted_by: userData.userId });
     await file.destroy();
     await sendEmail({

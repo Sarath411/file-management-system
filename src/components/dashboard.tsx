@@ -70,7 +70,7 @@ const DashBoard: React.FC = () => {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Box p={2}>
+    <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Typography variant="h5" gutterBottom>
           {role === `admin` ? `Recent Folders` : `My Folders`}

@@ -3,12 +3,10 @@ import Files from "../models/file";
 import UsersDocBoxes from "../models/uses_docboxes";
 import { getFileUrlFromS3 } from "../common/upload";
 import { createOrUpdateUserDocBoxService } from "./usersdocboxes";
-import { clerkClient } from "@clerk/nextjs";
+
 
 const createDocBoxService = async (docBoxData: any, userData: any) => {
   try {
-   
-
     const lastDocBox = await DocBox.findOne({
       order: [["created_at", "DESC"]],
       paranoid: false,

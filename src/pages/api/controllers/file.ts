@@ -66,7 +66,7 @@ export default function handler(
           const file_key = await uploadFileToS3(req.file);
           console.log("????????????", file_key);
           const fileData = {
-            ...req.body, // Other file data from the request body
+            ...req.body, 
             file_url: file_key,
           };
           const createdFile = await createFileService(fileData, userData);

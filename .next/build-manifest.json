@@ -27,21 +27,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/adddocbox": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/adddocbox.js"
-    ],
-    "/addfiles": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/addfiles.js"
-    ],
-    "/docbox": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/docbox.js"
-    ],
     "/files": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
